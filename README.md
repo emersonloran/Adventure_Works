@@ -24,7 +24,7 @@ Todo o backend da aplicação deverá ser a `API REST QyonAdventureWorks`.
 *  Para executar em modo `Debug`: somente pressionar `F5`
 *  Para executar sem ser modo `Debug`: executar o projeto `QyonAdventureWorks.Api.csproj` com  `dotnet run`
 
-Após executar o projeto `QyonAdventureWorks.Api`, certificar que ele está rodando indo no browser e executando `http://localhost:5000/api/hello`. Deverá aparecer a mensagem *"Hello from Qyon Adventure Works!"*.
+Após executar o projeto `QyonAdventureWorks.Api`, certificar que ele está rodando indo no browser e executando `http://localhost:8080/index.html`.
 
 ---
 
