@@ -48,7 +48,7 @@ Abaixo temos os requisitos não funcionais que decidimos em nossa equipe de tecn
 
 * [ ] O back-end deverá ser via `REST API` em `.net core` utilizando o projeto `QyonAdventureWorks` já pré criado.
 * [ ] O front-end deverá ser em `MVC` ou `React`
-* [ ] O banco de dados deverá ser em `Sql Server` ou `MySql`.
+* [ ] O banco de dados deverá ser em `PostgreSQL`
 
 
 ---
