@@ -4,3 +4,10 @@ export function getCompetitors (competitors) {
         payload: competitors
     }
 }
+
+export function postCompetitor (competitor) {
+    return {
+        type: 'POST_COMPETITOR',
+        payload: competitor
+    }
+}

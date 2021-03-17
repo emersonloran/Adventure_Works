@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
     competitors: [],
+
+    // competitor: {},
   };
   
   export default function (state = INITIAL_STATE, action) {
@@ -8,6 +10,12 @@ const INITIAL_STATE = {
         return {
           ...state,
           competitors: action.payload,
+        };
+
+      case "POST_COMPETITOR":
+        return {
+          ...state,
+          competitors: [...state.competitors, action.payload]
         };
   
       default:

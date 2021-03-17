@@ -24,7 +24,7 @@ const CompetitorsContent = props => {
   useEffect(async () => {
     try {
       const response = await api.get("/competitors");
-      
+      console.log("GET_COMPETITORS", response);
       dispatch(getCompetitors(response.data.competitors));
     } catch (error) {
       console.error(error.message);
@@ -54,7 +54,7 @@ const CompetitorsContent = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.competitors.map((competitor) => (
+          {props.competitors && props.competitors.map((competitor) => (
             <TableRow key={competitor.id}>
               <TableCell>{competitor.nome}</TableCell>
               <TableCell>{competitor.sexo}</TableCell>
