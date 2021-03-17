@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,61 +8,28 @@ import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 import { Button, Grid } from "@material-ui/core";
 import CompetitorDialog from "./CompetitorDialog";
-
-// Generate Competitors Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const competitors = [
-  createData(
-    0,
-    "16 Mar, 2019",
-    "Elvis Presley",
-    "Tupelo, MS",
-    "VISA ⠀•••• 3719",
-    312.44
-  ),
-  createData(
-    1,
-    "16 Mar, 2019",
-    "Paul McCartney",
-    "London, UK",
-    "VISA ⠀•••• 2574",
-    866.99
-  ),
-  createData(
-    2,
-    "16 Mar, 2019",
-    "Tom Scholz",
-    "Boston, MA",
-    "MC ⠀•••• 1253",
-    100.81
-  ),
-  createData(
-    3,
-    "16 Mar, 2019",
-    "Michael Jackson",
-    "Gary, IN",
-    "AMEX ⠀•••• 2000",
-    654.39
-  ),
-  createData(
-    4,
-    "15 Mar, 2019",
-    "Bruce Springsteen",
-    "Long Branch, NJ",
-    "VISA ⠀•••• 5919",
-    212.79
-  ),
-];
+import api from "../Apis/api";
+import { getCompetitors } from "../Redux/Actions";
+import { connect, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({}));
 
-const Competitors = () => {
+const CompetitorsContent = props => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   const [ competitorDialogOpen, setCompetitorDialogOpen ] = React.useState(false);
+
+  useEffect(async () => {
+    try {
+      const response = await api.get("/competitors");
+      
+      dispatch(getCompetitors(response.data.competitors));
+    } catch (error) {
+      console.error(error.message);
+    }
+  }, [])
 
   return (
     <React.Fragment>
@@ -87,7 +54,7 @@ const Competitors = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {competitors.map((competitor) => (
+          {props.competitors.map((competitor) => (
             <TableRow key={competitor.id}>
               <TableCell>{competitor.nome}</TableCell>
               <TableCell>{competitor.sexo}</TableCell>
@@ -103,4 +70,10 @@ const Competitors = () => {
   );
 };
 
-export default Competitors;
+function mapStateToProps(state) {
+  return {
+    competitors: state.reducer.competitors,
+  };
+}
+
+export default connect(mapStateToProps)(CompetitorsContent);

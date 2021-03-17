@@ -1,13 +1,13 @@
 import React from "react";
 import Dashboard from "../Components/Dashboard";
-import HomeContent from "../Components/HomeContent";
+import TracksContent from "../Components/TracksContent";
 
-const Home = () => {
+const Tracks = () => {
   return (
     <Dashboard>
-      <HomeContent />
+      <TracksContent />
     </Dashboard>
   );
 };
 
-export default Home;
+export default Tracks;

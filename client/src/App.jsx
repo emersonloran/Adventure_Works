@@ -1,9 +1,11 @@
 import { createMuiTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from "./Routes/Home";
 import store from "./Redux/Store";
 import { Provider } from "react-redux";
+import Home from "./Routes/Home";
+import Competitors from "./Routes/Competitors";
+import Tracks from "./Routes/Tracks";
 
 const theme = createMuiTheme({
   palette: {
@@ -25,6 +27,8 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/competidores" component={Competitors} />
+            <Route exact path="/pistas" component={Tracks} />
             {/* <Route exact path="/competitor/:id/update" component={DialogEditCompetitor} /> */}
           </Switch>
         </BrowserRouter>

@@ -15,7 +15,8 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItems, { mainListItems } from './ListItems';
-import Competitors from './Competitors';
+import Competitors from './CompetitorsContent';
+import Home from './HomeContent';
 
 const drawerWidth = 240;
 
@@ -95,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = props => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
@@ -150,7 +151,7 @@ const Dashboard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Competitors />
+                { props.children }
               </Paper>
             </Grid>
           </Grid>
