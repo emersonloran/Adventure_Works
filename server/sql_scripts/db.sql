@@ -48,4 +48,4 @@ INSERT INTO racing_history (competitor_id, track_id, data_corrida, tempo_gasto) 
 
 
 
-SELECT * FROM racing_history AS r INNER JOIN competitors AS c ON r.competitor_id = c.id;
+-- SELECT * FROM racing_history AS r INNER JOIN competitors AS c ON r.competitor_id = c.id;
