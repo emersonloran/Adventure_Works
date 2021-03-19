@@ -8,6 +8,7 @@ import Competitors from "./Routes/Competitors";
 import Tracks from "./Routes/Tracks";
 import Races from "./Routes/Races";
 import UsedTracks from "./Routes/UsedTracks";
+import AverageTime from "./Routes/AverageTime";
 
 const theme = createMuiTheme({
   palette: {
@@ -33,8 +34,8 @@ const App = () => {
             <Route exact path="/pistas" component={Tracks} />
             <Route exact path="/corridas" component={Races} />
             <Route exact path="/pistas_utilizadas" component={UsedTracks} />
-            {/* <Route exact path="/tempo_medio" component={AverageTime} />
-            <Route exact path="/sem_corrida" component={NoRun} /> */}
+            <Route exact path="/tempo_medio" component={AverageTime} />
+            {/* <Route exact path="/sem_corrida" component={NoRun} /> */}
           </Switch>
         </BrowserRouter>
       </ThemeProvider>

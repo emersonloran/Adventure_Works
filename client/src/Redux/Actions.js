@@ -5,6 +5,13 @@ export function getCompetitors (competitors) {
     }
 }
 
+export function getCompetitorsAverageTime (competitorsAverageTime) {
+    return {
+        type: 'GET_COMPETITORS_AVERAGE_TIME',
+        payload: competitorsAverageTime
+    }
+}
+
 export function postCompetitor (competitor) {
     return {
         type: 'POST_COMPETITOR',

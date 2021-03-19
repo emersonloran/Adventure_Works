@@ -24,6 +24,34 @@ app.get("/competitors", async (req, res) => {
   }
 });
 
+// GET competitor races
+app.get("/competitors_races", async (req, res) => {
+  try {
+    const results = await db.query("SELECT * FROM competitors INNER JOIN racing_history ON competitors.id = racing_history.competitor_id");
+
+    res.status(200).json({
+      competitors_races: results.rows,
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+
+// GET averge time from competitors
+app.get("/competitors_average_time", async (req, res) => {
+  try {
+    const results = await db.query("SELECT nome, SUM(tempo_gasto) AS tempo_medio FROM competitors INNER JOIN racing_history ON competitors.id = racing_history.competitor_id GROUP BY nome");
+
+    res.status(200).json({
+      competitors_average_time: results.rows,
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 // GET a competitor
 app.get("/competitor/:id", async (req, res) => {
   try {
