@@ -3,6 +3,8 @@ const INITIAL_STATE = {
 
     competitors_average_time: [],
 
+    competitors_no_run: [],
+
     tracks: [],
 
     used_tracks: [],
@@ -22,6 +24,12 @@ const INITIAL_STATE = {
         return {
           ...state,
           competitors_average_time: action.payload,
+        };
+
+      case "GET_COMPETITORS_NO_RUN":
+        return {
+          ...state,
+          competitors_no_run: action.payload,
         };
 
       case "POST_COMPETITOR":

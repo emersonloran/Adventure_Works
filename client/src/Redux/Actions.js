@@ -12,6 +12,13 @@ export function getCompetitorsAverageTime (competitorsAverageTime) {
     }
 }
 
+export function getCompetitorsNoRun (competitorsNoRun) {
+    return {
+        type: 'GET_COMPETITORS_NO_RUN',
+        payload: competitorsNoRun
+    }
+}
+
 export function postCompetitor (competitor) {
     return {
         type: 'POST_COMPETITOR',

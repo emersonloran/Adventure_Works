@@ -37,15 +37,26 @@ app.get("/competitors_races", async (req, res) => {
   }
 });
 
-
-
-// GET averge time from competitors
+// GET average time from competitors
 app.get("/competitors_average_time", async (req, res) => {
   try {
     const results = await db.query("SELECT nome, SUM(tempo_gasto) AS tempo_medio FROM competitors INNER JOIN racing_history ON competitors.id = racing_history.competitor_id GROUP BY nome");
 
     res.status(200).json({
       competitors_average_time: results.rows,
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+// GET competitors did not run yet
+app.get("/competitors_no_run", async (req, res) => {
+  try {
+    const results = await db.query("SELECT id, nome FROM competitors c WHERE NOT EXISTS (SELECT FROM racing_history rh WHERE c.id = rh.competitor_id)");
+
+    res.status(200).json({
+      competitors_no_run: results.rows,
     });
   } catch (error) {
     console.error(error.message);
