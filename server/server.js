@@ -110,6 +110,19 @@ app.get("/tracks", async (req, res) => {
   }
 });
 
+// GET used tracks
+app.get("/used_tracks", async (req, res) => {
+  try {
+    const results = await db.query("SELECT * FROM tracks INNER JOIN racing_history ON tracks.id = racing_history.track_id");
+
+    res.status(200).json({
+      used_tracks: results.rows,
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 // GET a track
 app.get("/track/:id", async (req, res) => {
   try {

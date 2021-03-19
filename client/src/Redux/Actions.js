@@ -26,6 +26,13 @@ export function getTracks (tracks) {
     }
 }
 
+export function getUsedTracks (used_tracks) {
+    return {
+        type: 'GET_USED_TRACKS',
+        payload: used_tracks
+    }
+}
+
 export function postTrack (track) {
     return {
         type: 'POST_TRACK',

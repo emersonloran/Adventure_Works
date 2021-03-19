@@ -3,6 +3,8 @@ const INITIAL_STATE = {
 
     tracks: [],
 
+    used_tracks: [],
+
     races: [],
   };
   
@@ -30,6 +32,12 @@ const INITIAL_STATE = {
         return {
           ...state,
           tracks: action.payload,
+        };
+
+      case "GET_USED_TRACKS":
+        return {
+          ...state,
+          used_tracks: action.payload,
         };
 
       case "POST_TRACK":

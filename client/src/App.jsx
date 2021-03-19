@@ -35,7 +35,6 @@ const App = () => {
             <Route exact path="/pistas_utilizadas" component={UsedTracks} />
             {/* <Route exact path="/tempo_medio" component={AverageTime} />
             <Route exact path="/sem_corrida" component={NoRun} /> */}
-            {/* <Route exact path="/competitor/:id/update" component={DialogEditCompetitor} /> */}
           </Switch>
         </BrowserRouter>
       </ThemeProvider>
