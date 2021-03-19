@@ -34,8 +34,8 @@ const UsedTracksContent = props => {
         <TableHead>
           <TableRow>
             <TableCell>Pista</TableCell>
-            <TableCell>Competidor</TableCell>
-            <TableCell>Corrida</TableCell>
+            <TableCell>ID do Competidor</TableCell>
+            <TableCell>ID da Corrida</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
