@@ -6,26 +6,26 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 import { Button, Grid } from "@material-ui/core";
-import TrackDialog from "./TrackDialog";
+import RaceDialog from "./RaceDialog";
 import api from "../Apis/api";
-import { getTracks, deleteTrack } from "../Redux/Actions";
+import { getRaces, deleteRace } from "../Redux/Actions";
 import { connect, useDispatch } from "react-redux";
-import TrackDetailsDialog from "./TrackDetailsDialog";
+import RaceDetailsDialog from "./RaceDetailsDialog";
 
-const TracksContent = props => {
+const RacesContent = (props) => {
   const dispatch = useDispatch();
 
-  const [trackDialogOpen, setTrackDialogOpen] = React.useState(false);
+  const [racesDialogOpen, setRacesDialogOpen] = React.useState(false);
 
-  const [trackDetailsDialogOpen, setTrackDetailsDialogOpen] = React.useState(false);
+  const [raceDetailsDialogOpen, setRaceDetailsDialogOpen] = React.useState(false);
 
-  const [track, setTrack] = React.useState(false);
+  const [race, setRace] = React.useState(false);
 
   useEffect(async () => {
     try {
-      const response = await api.get("/tracks");
-      console.log("GET_TRACKS", response);
-      dispatch(getTracks(response.data.tracks));
+      const response = await api.get("/races");
+      console.log("GET_RACES", response);
+      dispatch(getRaces(response.data.races));
     } catch (error) {
       console.error(error.message);
     }
@@ -33,8 +33,8 @@ const TracksContent = props => {
 
   const handleDelete = async (id) => {
     try {
-      dispatch(deleteTrack(id));
-      await api.delete(`/track/${id}`);
+      dispatch(deleteRace(id));
+      await api.delete(`/race/${id}`);
     } catch (error) {
       console.error(error.message);
     }
@@ -44,14 +44,14 @@ const TracksContent = props => {
     <React.Fragment>
       <Grid container justify="space-between">
         <Grid item>
-          <Title>Pistas</Title>
+          <Title>Corridas</Title>
         </Grid>
         <Grid item>
           <Button
             variant="contained"
             color="primary"
             onClick={() => {
-              setTrackDialogOpen(true);
+              setRacesDialogOpen(true);
             }}
           >
             +
@@ -61,24 +61,30 @@ const TracksContent = props => {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Descrição</TableCell>
+            <TableCell>Competidor</TableCell>
+            <TableCell>Pista</TableCell>
+            <TableCell>Data</TableCell>
+            <TableCell>Tempo</TableCell>
             <TableCell>Editar</TableCell>
             <TableCell>Deletar</TableCell>
             <TableCell align="right">Detalhes</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.tracks &&
-            props.tracks.map((track) => (
-              <TableRow key={track.id}>
-                <TableCell>{track.descricao}</TableCell>
+          {props.races &&
+            props.races.map((race) => (
+              <TableRow key={race.id}>
+                <TableCell>{race.competitor_id}</TableCell>
+                <TableCell>{race.track_id}</TableCell>
+                <TableCell>{race.data_corrida}</TableCell>
+                <TableCell>{race.tempo_gasto}</TableCell>
                 <TableCell align="right">
                   <Button
                     variant="contained"
                     style={{ color: "blue" }}
                     onClick={() => {
-                      setTrack(track);
-                      setTrackDialogOpen(true);
+                      setRace(race);
+                      setRacesDialogOpen(true);
                     }}
                   >
                     Editar
@@ -89,7 +95,7 @@ const TracksContent = props => {
                     variant="contained"
                     style={{ color: "red" }}
                     onClick={() => {
-                      handleDelete(track.id);
+                      handleDelete(race.id);
                     }}
                   >
                     Deletar
@@ -100,8 +106,8 @@ const TracksContent = props => {
                     variant="contained"
                     style={{ color: "green" }}
                     onClick={() => {
-                      setTrack(track);
-                      setTrackDetailsDialogOpen(true);
+                      setRace(race);
+                      setRaceDetailsDialogOpen(true);
                     }}
                   >
                     Detalhes
@@ -111,17 +117,17 @@ const TracksContent = props => {
             ))}
         </TableBody>
       </Table>
-      <TrackDialog
-        dialogOpen={trackDialogOpen}
-        setDialogOpen={setTrackDialogOpen}
-        track={track}
-        setTrack={setTrack}
+      <RaceDialog
+        dialogOpen={racesDialogOpen}
+        setDialogOpen={setRacesDialogOpen}
+        race={race}
+        setRace={setRace}
       />
-      <TrackDetailsDialog
-        trackDetailsDialogOpen={trackDetailsDialogOpen}
-        setTrackDetailsDialogOpen={setTrackDetailsDialogOpen}
-        track={track}
-        setTrack={setTrack}
+      <RaceDetailsDialog
+        raceDetailsDialogOpen={raceDetailsDialogOpen}
+        setRaceDetailsDialogOpen={setRaceDetailsDialogOpen}
+        race={race}
+        setRace={setRace}
       />
     </React.Fragment>
   );
@@ -129,8 +135,8 @@ const TracksContent = props => {
 
 function mapStateToProps(state) {
   return {
-    tracks: state.reducer.tracks,
+    races: state.reducer.races,
   };
 }
 
-export default connect(mapStateToProps)(TracksContent);
+export default connect(mapStateToProps)(RacesContent);

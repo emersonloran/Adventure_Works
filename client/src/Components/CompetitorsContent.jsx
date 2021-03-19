@@ -9,17 +9,20 @@ import Title from "./Title";
 import { Button, Grid } from "@material-ui/core";
 import CompetitorDialog from "./CompetitorDialog";
 import api from "../Apis/api";
-import { getCompetitors } from "../Redux/Actions";
+import { getCompetitors, deleteCompetitor } from "../Redux/Actions";
 import { connect, useDispatch } from "react-redux";
+import CompetitorDetailsDialog from "./CompetitorDetailsDialog";
 
 const useStyles = makeStyles((theme) => ({}));
 
-const CompetitorsContent = props => {
-  const classes = useStyles();
-
+const CompetitorsContent = (props) => {
   const dispatch = useDispatch();
 
-  const [ competitorDialogOpen, setCompetitorDialogOpen ] = React.useState(false);
+  const [competitorDialogOpen, setCompetitorDialogOpen] = React.useState(false);
+
+  const [competitorDetailsDialogOpen, setCompetitorDetailsDialogOpen] = React.useState(false);
+
+  const [competitor, setCompetitor] = React.useState(false);
 
   useEffect(async () => {
     try {
@@ -29,7 +32,16 @@ const CompetitorsContent = props => {
     } catch (error) {
       console.error(error.message);
     }
-  }, [])
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      dispatch(deleteCompetitor(id));
+      await api.delete(`/competitor/${id}`);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -38,7 +50,13 @@ const CompetitorsContent = props => {
           <Title>Competidores</Title>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="primary" onClick={() => {setCompetitorDialogOpen(true)}}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setCompetitorDialogOpen(true);
+            }}
+          >
             +
           </Button>
         </Grid>
@@ -51,21 +69,71 @@ const CompetitorsContent = props => {
             <TableCell>Temperatura Média Corporal</TableCell>
             <TableCell>Peso</TableCell>
             <TableCell align="right">Altura</TableCell>
+            <TableCell>Editar</TableCell>
+            <TableCell>Deletar</TableCell>
+            <TableCell>Detalhes</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.competitors && props.competitors.map((competitor) => (
-            <TableRow key={competitor.id}>
-              <TableCell>{competitor.nome}</TableCell>
-              <TableCell>{competitor.sexo}</TableCell>
-              <TableCell>{competitor.temperatura_media_corpo}</TableCell>
-              <TableCell>{competitor.peso}</TableCell>
-              <TableCell align="right">{competitor.altura}</TableCell>
-            </TableRow>
-          ))}
+          {props.competitors &&
+            props.competitors.map((competitor) => (
+              <TableRow key={competitor.id}>
+                <TableCell>{competitor.nome}</TableCell>
+                <TableCell>{competitor.sexo}</TableCell>
+                <TableCell>{competitor.temperatura_media_corpo}</TableCell>
+                <TableCell>{competitor.peso}</TableCell>
+                <TableCell align="right">{competitor.altura}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="contained"
+                    style={{ color: "blue" }}
+                    onClick={() => {
+                      setCompetitor(competitor);
+                      setCompetitorDialogOpen(true);
+                    }}
+                  >
+                    Editar
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="contained"
+                    style={{ color: "red" }}
+                    onClick={() => {
+                      handleDelete(competitor.id);
+                    }}
+                  >
+                    Deletar
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="contained"
+                    style={{ color: "green" }}
+                    onClick={() => {
+                      setCompetitor(competitor);
+                      setCompetitorDetailsDialogOpen(true);
+                    }}
+                  >
+                    Detalhes
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
-      <CompetitorDialog dialogOpen={competitorDialogOpen} setDialogOpen={setCompetitorDialogOpen}/>
+      <CompetitorDialog
+        dialogOpen={competitorDialogOpen}
+        setDialogOpen={setCompetitorDialogOpen}
+        competitor={competitor}
+        setCompetitor={setCompetitor}
+      />
+      <CompetitorDetailsDialog
+        competitorDetailsDialogOpen={competitorDetailsDialogOpen}
+        setCompetitorDetailsDialogOpen={setCompetitorDetailsDialogOpen}
+        competitor={competitor}
+        setCompetitor={setCompetitor}
+      />
     </React.Fragment>
   );
 };

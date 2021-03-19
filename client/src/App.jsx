@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import Home from "./Routes/Home";
 import Competitors from "./Routes/Competitors";
 import Tracks from "./Routes/Tracks";
+import Races from "./Routes/Races";
+import UsedTracks from "./Routes/UsedTracks";
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +31,10 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <Route exact path="/competidores" component={Competitors} />
             <Route exact path="/pistas" component={Tracks} />
+            <Route exact path="/corridas" component={Races} />
+            <Route exact path="/pistas_utilizadas" component={UsedTracks} />
+            {/* <Route exact path="/tempo_medio" component={AverageTime} />
+            <Route exact path="/sem_corrida" component={NoRun} /> */}
             {/* <Route exact path="/competitor/:id/update" component={DialogEditCompetitor} /> */}
           </Switch>
         </BrowserRouter>

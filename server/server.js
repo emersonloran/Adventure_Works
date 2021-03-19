@@ -87,11 +87,11 @@ app.put("/competitor/:id", async (req, res) => {
 // DELETE a competitor
 app.delete("/competitor/:id", (req, res) => {
   try {
+    db.query("DELETE FROM racing_history WHERE competitor_id = $1", [req.params.id]);
     db.query("DELETE FROM competitors WHERE id = $1", [req.params.id]);
 
-    res.status(200).json({
-      status: "success",
-    });
+    res.status(200);
+
   } catch (error) {
     console.error(error.message);
   }
@@ -161,17 +161,45 @@ app.put("/track/:id", async (req, res) => {
 app.delete("/track/:id", (req, res) => {
   try {
     db.query("DELETE FROM tracks WHERE id = $1", [req.params.id]);
+    db.query("DELETE FROM racing_history WHERE track_id = $1", [req.params.id]);
+
+    res.status(200);
+    
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+// GET all racing_history
+app.get("/races", async (req, res) => {
+  try {
+    const results = await db.query("SELECT * FROM racing_history");
 
     res.status(200).json({
-      status: "success",
+      races: results.rows,
     });
   } catch (error) {
     console.error(error.message);
   }
 });
 
-// POST a racing history
-app.post("/racing_history", async (req, res) => {
+// GET a racing_history
+app.get("/race/:id", async (req, res) => {
+  try {
+    const results = await db.query("SELECT * FROM racing_history WHERE id = $1", [
+      req.params.id,
+    ]);
+
+    res.status(200).json({
+      race: results.rows[0],
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+// POST a racing_history
+app.post("/race", async (req, res) => {
   try {
     const results = await db.query(
       "INSERT INTO racing_history (competitor_id, track_id, data_corrida, tempo_gasto) VALUES ($1, $2, $3, $4) RETURNING *",
@@ -184,15 +212,15 @@ app.post("/racing_history", async (req, res) => {
     );
 
     res.status(200).json({
-      racing_history: results.rows[0],
+      race: results.rows[0],
     });
   } catch (error) {
     console.error(error.message);
   }
 });
 
-// PUT a racing history
-app.put("/racing_history/:id", async (req, res) => {
+// PUT a racing_history
+app.put("/race/:id", async (req, res) => {
   try {
     const results = await db.query(
       "UPDATE racing_history SET data_corrida = $1, tempo_gasto = $2 WHERE id = $3 RETURNING *",
@@ -200,7 +228,7 @@ app.put("/racing_history/:id", async (req, res) => {
     );
 
     res.status(200).json({
-      racing_history: results.rows[0],
+      race: results.rows[0],
     });
   } catch (error) {
     console.error(error.message);
@@ -209,4 +237,16 @@ app.put("/racing_history/:id", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running at port: ${port}`);
+});
+
+// DELETE a racing_history
+app.delete("/race/:id", (req, res) => {
+  try {
+    db.query("DELETE FROM racing_history WHERE id = $1", [req.params.id]);
+
+    res.status(200);
+    
+  } catch (error) {
+    console.error(error.message);
+  }
 });

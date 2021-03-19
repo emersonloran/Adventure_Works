@@ -23,7 +23,7 @@ const sexo = [
 ];
 
 const CompetitorDialog = (props) => {
-  const { dialogOpen, setDialogOpen } = props;
+  const { dialogOpen, setDialogOpen, competitor, setCompetitor } = props;
 
   const dispatch = useDispatch();
 
@@ -51,7 +51,24 @@ const CompetitorDialog = (props) => {
     }
   }
 
+  const handleUpdate = async e => {
+    try {
+      const response = await api.put(`/competitor/${competitor.id}`, {
+        nome: name,
+        sexo: sex,
+        temperatura_media_corpo: temperature,
+        peso: weight,
+        altura: height
+      })
+
+      console.log("PUT_COMPETITOR", response);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   const handleClose = () => {
+    setCompetitor(false);
     setDialogOpen(false);
   };
 
@@ -62,10 +79,10 @@ const CompetitorDialog = (props) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle>Adicionar novo competidor</DialogTitle>
+        <DialogTitle>{competitor ? "Editar competidor" : "Adicionar novo competidor"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Informe abaixo os dados do competidor
+          {competitor ? "Altere abaixo os dados do competidor" : "Informe abaixo os dados do competidor"}
           </DialogContentText>
           <TextField
             value={name}
@@ -126,7 +143,7 @@ const CompetitorDialog = (props) => {
           </Button>
           <Button
             onClick={() => {
-              handleSubmit();
+              competitor ? handleUpdate() : handleSubmit();
               handleClose();
             }}
             color="primary"
