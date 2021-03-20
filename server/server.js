@@ -40,7 +40,7 @@ app.get("/competitors_races", async (req, res) => {
 // GET average time from competitors
 app.get("/competitors_average_time", async (req, res) => {
   try {
-    const results = await db.query("SELECT nome, SUM(tempo_gasto) AS tempo_medio FROM competitors INNER JOIN racing_history ON competitors.id = racing_history.competitor_id GROUP BY nome");
+    const results = await db.query("SELECT nome, AVG(tempo_gasto)::numeric(3) AS tempo_medio FROM competitors INNER JOIN racing_history ON competitors.id = racing_history.competitor_id GROUP BY nome");
 
     res.status(200).json({
       competitors_average_time: results.rows,
