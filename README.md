@@ -1,3 +1,17 @@
+# Execução
+
+Backend
+- Alterar informações do Pool em server/db/index conforme servidor do psql
+- No diretório server/sql-script contém queries a serem executadas no psql para criação do db e tables contendo também algumas inserções para teste
+- npm install para instalação das dependências
+- npm run start para rodar o servidor
+
+Frontent
+- Dentro do diretório client rodar o comando npm install para instalação das dependências
+- npm start
+
+Testar o projeto :)
+
 # Qyon Adventure Works
 
 Este é um projeto para medir seus conhecimentos práticos em .Net Core.
